@@ -1,5 +1,8 @@
 package it.alfasoft.rossella.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -91,9 +94,59 @@ public class UtenteDao {
 		}		
 		return res;
 	}
-		
-	//2b read tutti
 	
+	public boolean readUtenteUsernamePassword (String username,String password){
+		boolean res=false;
+		Session session = HibernateUtil.openSession();
+		Transaction tx = null;
+		UtenteBean u = null;
+		try {	
+			tx = session.getTransaction();
+			tx.begin();
+			Query query = session.createQuery("from UtenteBean where username=:usernameInserito and password=:passwordInserito");
+			query.setString("usernameInserito", username);
+			query.setString("passwordInserito", username);
+			u = (UtenteBean) query.uniqueResult();
+			if(u!=null){
+				res=true;
+			}			
+			tx.commit();
+			res = true;
+		} catch (Exception ex) {
+			tx.rollback();
+		} finally {
+			session.close();			
+		}		
+		return res;
+		
+	}
+	
+	//2b read tutti
+	public List<UtenteBean> readTuttiUtenti(){
+	
+	List<UtenteBean> listaUtenti = new ArrayList<UtenteBean>();
+
+	Session session = HibernateUtil.openSession();
+	Transaction tx = null;
+	UtenteBean u = null;
+	try {	
+		tx = session.getTransaction();
+		tx.begin();
+		
+		Query query = session.createQuery("From UtenteBean");
+		
+		listaUtenti= query.list();
+			
+		tx.commit();
+		
+	} catch (Exception ex) {
+		tx.rollback();
+	} finally {
+		session.close();			
+	}
+	
+	return listaUtenti;
+	}
 	//3 update
 	
 	public boolean aggiornaUtente(UtenteBean u) {

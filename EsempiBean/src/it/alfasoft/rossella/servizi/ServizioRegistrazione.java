@@ -21,7 +21,10 @@ public class ServizioRegistrazione {
 	}
 	
 	
-	
+	public boolean cercaUtenteUsernamePassword(String username,String password ){
+		return uDao.readUtenteUsernamePassword(username,password);
+		
+	}
 	
 	
 	
