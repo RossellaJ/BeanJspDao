@@ -16,7 +16,7 @@
 <h1>conferma Registrazione</h1>
 
 
-<h2>Benvenuto : <%utente.getNome(); %></h2>
+<h2>Benvenuto : <%=utente.getNome() %></h2>
 
 <hr>
 <a href = "Login.jsp"> Vai a Login</a>
